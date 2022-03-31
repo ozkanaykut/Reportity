@@ -50,7 +50,7 @@ namespace Reportity.Common
                     float fontvalue = (ceiling - colCount) / 2;
                     if (fontvalue < 6)
                         fontvalue = 6;
-                    if (fontvalue > 15)
+                    else if (fontvalue > 15)
                         fontvalue = 15;
                     foreach (var item in cells)
                     {
