@@ -61,5 +61,23 @@ namespace ReportitiyTest
             list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
             byte[] vs = list.ToStreamReport(ReportTypes.XmlReport);
         }
+
+        [TestMethod]
+        public void TestEntitiyToPDFString()
+        {
+            List<TestData> list = new List<TestData>();
+            list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 });
+            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
+            string vs = list.ToStringReport(ReportTypes.PdfReport);
+        }
+
+        [TestMethod]
+        public void TestEntitiyToPDFStream()
+        {
+            List<TestData> list = new List<TestData>();
+            list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 });
+            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
+            byte[] vs = list.ToStreamReport(ReportTypes.PdfReport);
+        }
     }
 }
