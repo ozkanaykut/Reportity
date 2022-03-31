@@ -25,5 +25,23 @@ namespace ReportitiyTest
             list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
             byte[] vs = list.ToStreamReport(ReportTypes.CsvReport);
         }
+
+        [TestMethod]
+        public void TestEntitiyToExcelString()
+        {
+            List<TestData> list = new List<TestData>();
+            list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 });
+            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
+            string vs = list.ToStringReport(ReportTypes.ExcelReport);
+        }
+
+        [TestMethod]
+        public void TestEntitiyToExcelStream()
+        {
+            List<TestData> list = new List<TestData>();
+            list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 });
+            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
+            byte[] vs = list.ToStreamReport(ReportTypes.ExcelReport);
+        }
     }
 }
