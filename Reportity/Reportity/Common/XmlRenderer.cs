@@ -1,5 +1,8 @@
-﻿using Reportity.Abstractions;
+﻿using Newtonsoft.Json;
+using Reportity.Abstractions;
 using Reportity.Core;
+using Reportity.Exception;
+using System.Xml;
 
 namespace Reportity.Common
 {
@@ -17,7 +20,22 @@ namespace Reportity.Common
 
         public override byte[] RenderData(IEnumerable<T> list)
         {
-            throw new NotImplementedException();
+            using (MemoryStream ReportData = new MemoryStream())
+            {
+                try
+                {
+                    string value = JsonConvert.SerializeObject(list);
+                    XmlDocument doc = JsonConvert.DeserializeXmlNode("{\"Row\":" + value + "}", "Reportity");
+                    doc.Save(ReportData);
+                    ReportData.Flush();
+                }
+                catch (System.Exception ex)
+                {
+                    throw new ReportitiyException(ex.Message);
+                }
+                return ReportData.ToArray();
+            }
+            
         }
     }
 }
