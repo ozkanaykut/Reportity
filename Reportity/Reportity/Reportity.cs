@@ -1,6 +1,7 @@
 ﻿using Reportity.Common;
 using Reportity.Core;
 using Reportity.Enums;
+using Reportity.Exception;
 
 namespace Reportity
 {
@@ -8,34 +9,54 @@ namespace Reportity
     {
         public static byte[] ToStreamReport<T>(this IEnumerable<T> list, ReportTypes type)
         {
-            return null;
-        }
-
-        public static string ToStringReport<T>(this IEnumerable<T> list, ReportTypes type)
-        {
-            string result = "";
+            IByteExporter<T> Renderer = null;
             switch (type)
             {
                 case ReportTypes.XmlReport:
-                    IStringExporter<T> Xmlrenderer = new XmlRenderer<T>();
-                    result = Xmlrenderer.ExportToString(list);
+                    Renderer = new XmlRenderer<T>();
                     break;
                 case ReportTypes.CsvReport:
-                    IStringExporter<T> Csvrenderer = new CSVRenderer<T>();
-                    result = Csvrenderer.ExportToString(list);
+                    Renderer = new CSVRenderer<T>();
                     break;
                 case ReportTypes.ExcelReport:
-                    IStringExporter<T> Excelrenderer = new ExcelRenderer<T>();
-                    result = Excelrenderer.ExportToString(list);
+                    Renderer = new ExcelRenderer<T>();
                     break;
                 case ReportTypes.PdfReport:
-                    IStringExporter<T> PDFrenderer = new PDFRenderer<T>();
-                    result = PDFrenderer.ExportToString(list);
+                    Renderer = new PDFRenderer<T>();
                     break;
                 default:
                     break;
             }
-            return result;
+            if (Renderer != null)
+                return Renderer.ExportToStream(list);
+            else
+                throw new ReportitiyException("Not implemented report type.");
+        }
+
+        public static string ToStringReport<T>(this IEnumerable<T> list, ReportTypes type)
+        {
+            IStringExporter<T> Renderer = null;
+            switch (type)
+            {
+                case ReportTypes.XmlReport:
+                    Renderer = new XmlRenderer<T>();
+                    break;
+                case ReportTypes.CsvReport:
+                    Renderer = new CSVRenderer<T>();
+                    break;
+                case ReportTypes.ExcelReport:
+                    Renderer = new ExcelRenderer<T>();
+                    break;
+                case ReportTypes.PdfReport:
+                    Renderer = new PDFRenderer<T>();
+                    break;
+                default:
+                    break;
+            }
+            if (Renderer != null)
+                return Renderer.ExportToString(list);
+            else
+                throw new ReportitiyException("Not implemented report type.");
         }
     }
 }
