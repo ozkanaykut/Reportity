@@ -2,7 +2,6 @@ C:\Users\ali\source\repos\Reportity\Reportity\Reportity\bin\Debug\net6.0\Reporti
 C:\Users\ali\source\repos\Reportity\Reportity\Reportity\bin\Debug\net6.0\Reportity.dll
 C:\Users\ali\source\repos\Reportity\Reportity\Reportity\bin\Debug\net6.0\ref\Reportity.dll
 C:\Users\ali\source\repos\Reportity\Reportity\Reportity\bin\Debug\net6.0\Reportity.pdb
-C:\Users\ali\source\repos\Reportity\Reportity\Reportity\obj\Debug\net6.0\Reportity.csproj.AssemblyReference.cache
 C:\Users\ali\source\repos\Reportity\Reportity\Reportity\obj\Debug\net6.0\Reportity.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\ali\source\repos\Reportity\Reportity\Reportity\obj\Debug\net6.0\Reportity.AssemblyInfoInputs.cache
 C:\Users\ali\source\repos\Reportity\Reportity\Reportity\obj\Debug\net6.0\Reportity.AssemblyInfo.cs

@@ -9,11 +9,21 @@ namespace ReportitiyTest
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestEntitiyToCSVString()
         {
             List<TestData> list = new List<TestData>();
             list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 } );
-            byte[] vs = list.ToStreamReport(ReportTypes.PdfReport);
+            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
+            string vs = list.ToStringReport(ReportTypes.CsvReport);
+        }
+
+        [TestMethod]
+        public void TestEntitiyToCSVStream()
+        {
+            List<TestData> list = new List<TestData>();
+            list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 });
+            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
+            byte[] vs = list.ToStreamReport(ReportTypes.CsvReport);
         }
     }
 }

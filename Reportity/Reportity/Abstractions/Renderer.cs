@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Reportity.Abstractions
 {
-    public abstract class Renderer
+    public abstract class Renderer<T>
     {
-        public abstract byte[] RenderData();
+        public abstract byte[] RenderData(IEnumerable<T> list);
     }
 }

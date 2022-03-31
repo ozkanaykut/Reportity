@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Reportity.Core
 {
-    internal interface IExporter
+    internal interface IStringExporter<T>
     {
-        string ExportToString();
-        byte[] ExportToStream();
+        string ExportToString(IEnumerable<T> list);
     }
 }

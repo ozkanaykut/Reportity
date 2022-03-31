@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Reportity.Common
 {
-    internal class PDFRenderer : Renderer, IExporter
+    internal class PDFRenderer<T> : Renderer<T>, IStringExporter<T>, IByteExporter<T>
     {
-        public byte[] ExportToStream()
+        public byte[] ExportToStream(IEnumerable<T> list)
         {
-            return RenderData();
+            return RenderData(list);
         }
 
-        public string ExportToString()
+        public string ExportToString(IEnumerable<T> list)
         {
-            return Convert.ToBase64String(RenderData());
+            return Convert.ToBase64String(RenderData(list));
         }
 
-        public override byte[] RenderData()
+        public override byte[] RenderData(IEnumerable<T> list)
         {
             throw new NotImplementedException();
         }

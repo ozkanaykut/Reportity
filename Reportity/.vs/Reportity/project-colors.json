@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "863109fe-cd14-40b6-aff3-01481dae6aec": {
+      "ProjectGuid": "863109fe-cd14-40b6-aff3-01481dae6aec",
+      "DisplayName": "Reportity",
+      "ColorIndex": 0
+    },
+    "247b8c53-760a-4804-8348-12b401664327": {
+      "ProjectGuid": "247b8c53-760a-4804-8348-12b401664327",
+      "DisplayName": "ReportitiyTest",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
