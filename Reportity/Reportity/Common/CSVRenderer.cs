@@ -1,6 +1,7 @@
 ﻿using Reportity.Abstractions;
 using Reportity.Core;
 using Reportity.Exception;
+using Reportity.Helper;
 using System.Reflection;
 using System.Text;
 
@@ -29,7 +30,7 @@ namespace Reportity.Common
                     List<string> header = new List<string>();
                     foreach (PropertyInfo propertyInfo in type.GetProperties())
                     {
-                        if (propertyInfo.GetType().IsPrimitive)
+                        if (TypeChecker.CheckType(propertyInfo))
                         {
                             header.Add(propertyInfo.Name.ToUpper());
                         }
@@ -42,7 +43,7 @@ namespace Reportity.Common
                         List<string> values = new List<string>();
                         foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
                         {
-                            if (propertyInfo.GetType().IsPrimitive)
+                            if (TypeChecker.CheckType(propertyInfo))
                             {
                                 values.Add(propertyInfo.GetValue(data).ToString());
                             }

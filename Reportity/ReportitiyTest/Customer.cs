@@ -20,5 +20,7 @@ namespace ReportitiyTest
         public decimal Price { get; set; }
         [ReportityColumnName(ColumnName = "Sipariş Tarihi")]
         public DateTime OrderDate { get; set; }
+        [ReportityColumnName(ColumnName = "Bug")]
+        public TestData bug { get; set; }
     }
 }

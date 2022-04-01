@@ -4,6 +4,7 @@ using Reportity.Abstractions;
 using Reportity.Attributes;
 using Reportity.Core;
 using Reportity.Exception;
+using Reportity.Helper;
 using System.Collections;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -53,7 +54,7 @@ namespace Reportity.Common
                             ReportityColumnName columnNameAttr = colattr as ReportityColumnName;
                             if (columnNameAttr != null)
                             {
-                                if (propertyInfo.GetType().IsPrimitive)
+                                if (TypeChecker.CheckType(propertyInfo))
                                 {
                                     if (columnNameAttr.ColumnName != "")
                                         cells.Add(columnNameAttr.ColumnName);
@@ -105,7 +106,7 @@ namespace Reportity.Common
                     {
                         foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
                         {
-                            if (propertyInfo.GetType().IsPrimitive)
+                            if (TypeChecker.CheckType(propertyInfo))
                             {
                                 cellText = propertyInfo.GetValue(data).ToString();
 
