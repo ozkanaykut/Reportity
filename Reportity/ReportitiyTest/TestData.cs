@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Reportity.Attributes;
+using System;
+using System.Drawing.Imaging;
 
 namespace ReportitiyTest
 {
+    [ReportityHeaderAttribute(LogoPath = "D:\\logo.png", ReportHeader = "Deneme Raporu")]
     public class TestData
     {
         public int testvalue1 { get; set; }

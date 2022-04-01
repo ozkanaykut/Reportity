@@ -1,10 +1,12 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Reportity.Abstractions;
+using Reportity.Attributes;
 using Reportity.Core;
 using Reportity.Exception;
 using System.Collections;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Reflection;
 
 namespace Reportity.Common
@@ -28,19 +30,50 @@ namespace Reportity.Common
             {
                 try
                 {
+                    string reportheader = "";
+                    string logopath = "";
                     ArrayList cells = new ArrayList();
                     Type type = typeof(T);
+                    object[] attrs = type.GetCustomAttributes(true);
+                    foreach (object attr in attrs)
+                    {
+                        ReportityHeaderAttribute reportityAttr = attr as ReportityHeaderAttribute;
+                        if (reportityAttr != null)
+                        {
+                            reportheader = reportityAttr.ReportHeader;
+                            logopath = reportityAttr.LogoPath;
+                        }
+
+                    }
+
                     foreach (PropertyInfo propertyInfo in type.GetProperties())
                     {
-                        cells.Add(propertyInfo.Name.ToUpper());
+                        object[] colattrs = propertyInfo.GetCustomAttributes(true);
+                        foreach (object colattr in colattrs)
+                        {
+                            ReportityColumnName columnNameAttr = colattr as ReportityColumnName;
+                            if (columnNameAttr != null)
+                            {
+                                if (columnNameAttr.ColumnName != "")
+                                    cells.Add(columnNameAttr.ColumnName);
+                                else
+                                    cells.Add(propertyInfo.Name);
+
+                            }
+                        }
                     }
 
                     PdfPTable table = null;
-
                     int colCount = cells.Count;
                     table = new PdfPTable(colCount);
                     table.HorizontalAlignment = 1;
                     table.WidthPercentage = 100;
+
+                    BaseFont bf = BaseFont.CreateFont(
+                                                    BaseFont.HELVETICA,
+                                                    "CP1254",
+                                                    BaseFont.NOT_EMBEDDED,
+                                                    false);
 
                     int[] colWidths = new int[colCount];
 
@@ -54,16 +87,8 @@ namespace Reportity.Common
                         fontvalue = 15;
                     foreach (var item in cells)
                     {
-                        cellText = item.ToString();
-
-                        BaseFont bf = BaseFont.CreateFont(
-                                                BaseFont.HELVETICA,
-                                                BaseFont.CP1252,
-                                                BaseFont.EMBEDDED,
-                                                false);
-
-                        iTextSharp.text.Font font = new iTextSharp.text.Font(bf, fontvalue, iTextSharp.text.Font.BOLD, BaseColor.White);
-                        cell = new PdfPCell(new Phrase(cellText.Replace("<br />", Environment.NewLine), font));
+                        iTextSharp.text.Font font = new iTextSharp.text.Font(bf, fontvalue, iTextSharp.text.Font.NORMAL, BaseColor.White);
+                        cell = new PdfPCell(new Phrase(item.ToString().Replace("<br />", Environment.NewLine), font));
 
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
@@ -80,11 +105,7 @@ namespace Reportity.Common
                         foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
                         {
                             cellText = propertyInfo.GetValue(data).ToString();
-                            BaseFont bf = BaseFont.CreateFont(
-                                                    BaseFont.HELVETICA,
-                                                    BaseFont.CP1252,
-                                                    BaseFont.EMBEDDED,
-                                                    false);
+                            
 
                             iTextSharp.text.Font font = new iTextSharp.text.Font(bf, fontvalue, iTextSharp.text.Font.NORMAL, BaseColor.Black);
                             cell = new PdfPCell(new Phrase(cellText.Replace("<br />", Environment.NewLine), font));
@@ -106,12 +127,47 @@ namespace Reportity.Common
                     PdfWriter.GetInstance(pdfDoc, ReportData);
                     pdfDoc.Open();
                     table.HeaderRows = 1;
+                   
+                    iTextSharp.text.Font fheader = new iTextSharp.text.Font(bf, 15, iTextSharp.text.Font.BOLD, BaseColor.Black);
+                    iTextSharp.text.Font fdate = new iTextSharp.text.Font(bf, 11, iTextSharp.text.Font.ITALIC, BaseColor.Black);
 
-                    iTextSharp.text.Font fdefault = FontFactory.GetFont("Verdana", 15, iTextSharp.text.Font.BOLD, BaseColor.Blue);
+                    pdfDoc.Add(new Paragraph(DateTime.Now.ToString(), fdate) { Alignment = Element.ALIGN_RIGHT });
+                    pdfDoc.Add(new Paragraph(reportheader, fheader) { Alignment = Element.ALIGN_CENTER });
+                    //pdfDoc.Add(new Paragraph(new Phrase(reportheader.Replace("<br />", Environment.NewLine), fheader)) { Alignment = Element.ALIGN_CENTER });
 
-                    pdfDoc.Add(new Paragraph(" ", fdefault));
-                    pdfDoc.Add(new Paragraph("Header", fdefault) { Alignment = Element.ALIGN_CENTER });
-                    pdfDoc.Add(new Paragraph(" ", fdefault));
+                    if (logopath != "")
+                    {
+                        try
+                        {
+                            System.Drawing.Image imagefromfile = System.Drawing.Image.FromFile(logopath);
+                            string[] extensionList = logopath.Split(".");
+                            string extension = extensionList.Last().ToUpper();
+
+                            iTextSharp.text.Image image = null;
+
+                            switch (extension)
+                            {
+                                case "PNG":
+                                    image = iTextSharp.text.Image.GetInstance(imagefromfile, ImageFormat.Png);
+                                    break;
+                                case "JPG":
+                                    image = iTextSharp.text.Image.GetInstance(imagefromfile, ImageFormat.Jpeg);
+                                    break;
+                            }
+
+                            image.SetDpi(100, 100);
+                            image.SetAbsolutePosition(20, pdfDoc.Top - 40);
+                            image.ScaleToFit(100, 100);
+
+                            pdfDoc.Add(image);
+                        }
+                        catch (System.Exception ex)
+                        {
+                            throw new ReportitiyException(ex.Message);
+                        }
+                    }
+
+                    pdfDoc.Add(new Paragraph(" "));
                     pdfDoc.Add(table);
 
                     pdfDoc.Close();
