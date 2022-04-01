@@ -45,7 +45,7 @@ namespace Reportity.Common
                             {
                                 if (TypeChecker.CheckType(propertyInfo))
                                 {
-                                    values.Add(propertyInfo.GetValue(data).ToString() ?? "");
+                                    values.Add(propertyInfo.GetValue(data)?.ToString());
                                 }
                             }
                             builder.Append(string.Join(",", values) + Environment.NewLine);

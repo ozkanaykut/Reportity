@@ -105,16 +105,16 @@ namespace Reportity.Common
                     }
                     bool color = false;
 
-                    foreach (T data in list)
+                    foreach (var data in list)
                     {
                         foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
                         {
                             if (TypeChecker.CheckType(propertyInfo))
                             {
-                                cellText = propertyInfo.GetValue(data).ToString() ?? "";
+                                cellText = propertyInfo.GetValue(data)?.ToString();
 
                                 iTextSharp.text.Font font = new iTextSharp.text.Font(bf, fontvalue, iTextSharp.text.Font.NORMAL, BaseColor.Black);
-                                cell = new PdfPCell(new Phrase(cellText.Replace("<br />", Environment.NewLine), font));
+                                cell = new PdfPCell(new Phrase(cellText?.Replace("<br />", Environment.NewLine), font));
 
                                 cell.HorizontalAlignment = Element.ALIGN_CENTER;
                                 cell.VerticalAlignment = Element.ALIGN_MIDDLE;
