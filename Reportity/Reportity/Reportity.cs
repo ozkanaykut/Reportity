@@ -9,7 +9,7 @@ namespace Reportity
     {
         public static byte[] ToStreamReport<T>(this IEnumerable<T> list, ReportTypes type)
         {
-            IByteExporter<T> Renderer = null;
+            IByteExporter<T>? Renderer = null;
             switch (type)
             {
                 case ReportTypes.XmlReport:
@@ -35,7 +35,7 @@ namespace Reportity
 
         public static string ToStringReport<T>(this IEnumerable<T> list, ReportTypes type)
         {
-            IStringExporter<T> Renderer = null;
+            IStringExporter<T>? Renderer = null;
             switch (type)
             {
                 case ReportTypes.XmlReport:

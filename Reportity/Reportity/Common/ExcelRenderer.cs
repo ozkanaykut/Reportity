@@ -23,7 +23,7 @@ namespace Reportity.Common
 
         public override byte[] RenderData(IEnumerable<T> list)
         {
-            MemoryStream Reportdata = null;
+            MemoryStream? Reportdata = null;
             using (var package = new ExcelPackage())
             {
                 try
@@ -60,14 +60,14 @@ namespace Reportity.Common
                     int recordIndex = 2;
                     bool color = false;
 
-                    foreach (var data in list)
+                    foreach (T data in list)
                     {
                         List<string> values = new List<string>();
                         foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
                         {
                             if (TypeChecker.CheckType(propertyInfo))
                             {
-                                worksheet.Cells[recordIndex, row].Value = propertyInfo.GetValue(data).ToString();
+                                worksheet.Cells[recordIndex, row].Value = propertyInfo.GetValue(data)?.ToString();
                                 worksheet.Cells[recordIndex, row].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                                 worksheet.Cells[recordIndex, row].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                                 worksheet.Cells[recordIndex, row].Style.Fill.PatternType = ExcelFillStyle.Solid;

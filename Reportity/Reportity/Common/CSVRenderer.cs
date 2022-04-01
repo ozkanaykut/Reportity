@@ -38,17 +38,17 @@ namespace Reportity.Common
 
                     builder.Append(string.Join(",", header) + Environment.NewLine);
 
-                    foreach (var data in list)
+                    foreach (T data in list)
                     {
-                        List<string> values = new List<string>();
-                        foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
-                        {
-                            if (TypeChecker.CheckType(propertyInfo))
+                            List<string> values = new List<string>();
+                            foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
                             {
-                                values.Add(propertyInfo.GetValue(data).ToString());
+                                if (TypeChecker.CheckType(propertyInfo))
+                                {
+                                    values.Add(propertyInfo.GetValue(data).ToString() ?? "");
+                                }
                             }
-                        }
-                        builder.Append(string.Join(",", values) + Environment.NewLine);
+                            builder.Append(string.Join(",", values) + Environment.NewLine);
                     }
                     
                     TextWriter tw = new StreamWriter(reportData);

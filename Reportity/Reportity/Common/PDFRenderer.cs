@@ -13,7 +13,7 @@ using System.Reflection;
 namespace Reportity.Common
 {
     internal class PDFRenderer<T> : Renderer<T>, IStringExporter<T>, IByteExporter<T>
-    {
+    { 
         const int ceiling = 25;
         public byte[] ExportToStream(IEnumerable<T> list)
         {
@@ -33,16 +33,19 @@ namespace Reportity.Common
                 {
                     string reportheader = "";
                     string logopath = "";
+                    string? summaryfield = "";
+                    short summaryindex = 0;
                     ArrayList cells = new ArrayList();
                     Type type = typeof(T);
                     object[] attrs = type.GetCustomAttributes(true);
                     foreach (object attr in attrs)
                     {
-                        ReportityHeaderAttribute reportityAttr = attr as ReportityHeaderAttribute;
+                        ReportityHeaderAttribute? reportityAttr = attr as ReportityHeaderAttribute;
                         if (reportityAttr != null)
                         {
                             reportheader = reportityAttr.ReportHeader;
                             logopath = reportityAttr.LogoPath;
+                            summaryfield = reportityAttr.SummaryField;
                         }
                     }
 
@@ -51,7 +54,7 @@ namespace Reportity.Common
                         object[] colattrs = propertyInfo.GetCustomAttributes(true);
                         foreach (object colattr in colattrs)
                         {
-                            ReportityColumnName columnNameAttr = colattr as ReportityColumnName;
+                            ReportityColumnName? columnNameAttr = colattr as ReportityColumnName;
                             if (columnNameAttr != null)
                             {
                                 if (TypeChecker.CheckType(propertyInfo))
@@ -65,7 +68,7 @@ namespace Reportity.Common
                         }
                     }
 
-                    PdfPTable table = null;
+                    PdfPTable? table = null;
                     int colCount = cells.Count;
                     table = new PdfPTable(colCount);
                     table.HorizontalAlignment = 1;
@@ -90,7 +93,7 @@ namespace Reportity.Common
                     foreach (var item in cells)
                     {
                         iTextSharp.text.Font font = new iTextSharp.text.Font(bf, fontvalue, iTextSharp.text.Font.NORMAL, BaseColor.White);
-                        cell = new PdfPCell(new Phrase(item.ToString().Replace("<br />", Environment.NewLine), font));
+                        cell = new PdfPCell(new Phrase(item.ToString()?.Replace("<br />", Environment.NewLine), font));
 
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
@@ -102,14 +105,13 @@ namespace Reportity.Common
                     }
                     bool color = false;
 
-                    foreach (var data in list)
+                    foreach (T data in list)
                     {
                         foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
                         {
                             if (TypeChecker.CheckType(propertyInfo))
                             {
-                                cellText = propertyInfo.GetValue(data).ToString();
-
+                                cellText = propertyInfo.GetValue(data).ToString() ?? "";
 
                                 iTextSharp.text.Font font = new iTextSharp.text.Font(bf, fontvalue, iTextSharp.text.Font.NORMAL, BaseColor.Black);
                                 cell = new PdfPCell(new Phrase(cellText.Replace("<br />", Environment.NewLine), font));
@@ -147,7 +149,7 @@ namespace Reportity.Common
                             string[] extensionList = logopath.Split(".");
                             string extension = extensionList.Last().ToUpper();
 
-                            iTextSharp.text.Image image = null;
+                            iTextSharp.text.Image? image = null;
 
                             switch (extension)
                             {
@@ -159,9 +161,9 @@ namespace Reportity.Common
                                     break;
                             }
 
-                            image.SetDpi(100, 100);
-                            image.SetAbsolutePosition(20, pdfDoc.Top - 40);
-                            image.ScaleToFit(100, 100);
+                            image?.SetDpi(100, 100);
+                            image?.SetAbsolutePosition(20, pdfDoc.Top - 40);
+                            image?.ScaleToFit(100, 100);
 
                             pdfDoc.Add(image);
                         }

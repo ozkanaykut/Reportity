@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace ReportitiyTest
 {
-    [ReportityHeaderAttribute(LogoPath = "D:\\logo.png", ReportHeader = "Lays Satış Raporu")]
+    [ReportityHeaderAttribute("D:\\logo.png", "Lays Satış Raporu", SummaryField = "Price")]
     public class Customer
     {
-        [ReportityColumnName(ColumnName = "Müşteri")]
-        public string CustomerName { get; set; }
-        [ReportityColumnName(ColumnName = "Ürün Tipi")]
-        public string ProductType { get; set; }
-        [ReportityColumnName(ColumnName = "Adet")]
+        [ReportityColumnName("Müşteri")]
+        public string? CustomerName { get; set; }
+        [ReportityColumnName("Ürün Tipi")]
+        public string? ProductType { get; set; }
+        [ReportityColumnName("Adet")]
         public int Quantity { get; set; }
-        [ReportityColumnName(ColumnName = "Fiyat")]
+        [ReportityColumnName("Fiyat")]
         public decimal Price { get; set; }
-        [ReportityColumnName(ColumnName = "Sipariş Tarihi")]
+        [ReportityColumnName("Sipariş Tarihi")]
         public DateTime OrderDate { get; set; }
-        [ReportityColumnName(ColumnName = "Bug")]
-        public TestData bug { get; set; }
+        [ReportityColumnName("Bug")]
+        public TestData? bug { get; set; }
     }
 }

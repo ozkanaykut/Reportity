@@ -25,9 +25,12 @@ namespace Reportity.Common
                 try
                 {
                     string value = JsonConvert.SerializeObject(list);
-                    XmlDocument doc = JsonConvert.DeserializeXmlNode("{\"Row\":" + value + "}", "Reportity");
-                    doc.Save(ReportData);
-                    ReportData.Flush();
+                    XmlDocument? doc = JsonConvert.DeserializeXmlNode("{\"Row\":" + value + "}", "Reportity");
+                    if (doc!= null)
+                    {
+                        doc.Save(ReportData);
+                        ReportData.Flush();
+                    }
                 }
                 catch (System.Exception ex)
                 {

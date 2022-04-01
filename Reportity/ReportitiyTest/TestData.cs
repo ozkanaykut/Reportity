@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 
 namespace ReportitiyTest
 {
-    [ReportityHeaderAttribute(LogoPath = "D:\\logo.png", ReportHeader = "Deneme Raporu")]
+    [ReportityHeaderAttribute("D:\\logo.png", "Deneme Raporu")]
     public class TestData
     {
         public int testvalue1 { get; set; }
