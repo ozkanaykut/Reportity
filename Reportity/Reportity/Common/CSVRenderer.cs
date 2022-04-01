@@ -29,7 +29,10 @@ namespace Reportity.Common
                     List<string> header = new List<string>();
                     foreach (PropertyInfo propertyInfo in type.GetProperties())
                     {
-                        header.Add(propertyInfo.Name.ToUpper());                        
+                        if (propertyInfo.GetType().IsPrimitive)
+                        {
+                            header.Add(propertyInfo.Name.ToUpper());
+                        }
                     }
 
                     builder.Append(string.Join(",", header) + Environment.NewLine);
@@ -39,7 +42,10 @@ namespace Reportity.Common
                         List<string> values = new List<string>();
                         foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
                         {
-                            values.Add(propertyInfo.GetValue(data).ToString());
+                            if (propertyInfo.GetType().IsPrimitive)
+                            {
+                                values.Add(propertyInfo.GetValue(data).ToString());
+                            }
                         }
                         builder.Append(string.Join(",", values) + Environment.NewLine);
                     }

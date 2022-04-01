@@ -32,7 +32,10 @@ namespace Reportity.Common
                     List<string> header = new List<string>();
                     foreach (PropertyInfo propertyInfo in type.GetProperties())
                     {
-                        header.Add(propertyInfo.Name.ToUpper());
+                        if (propertyInfo.GetType().IsPrimitive)
+                        {
+                            header.Add(propertyInfo.Name.ToUpper());
+                        }
                     }
 
                     var worksheet = package.Workbook.Worksheets.Add("Reportity");
@@ -61,16 +64,19 @@ namespace Reportity.Common
                         List<string> values = new List<string>();
                         foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
                         {
-                            worksheet.Cells[recordIndex, row].Value = propertyInfo.GetValue(data).ToString();
-                            worksheet.Cells[recordIndex, row].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                            worksheet.Cells[recordIndex, row].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                            worksheet.Cells[recordIndex, row].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            worksheet.Cells[recordIndex, row].Style.Fill.BackgroundColor.SetColor(color ? Color.LightGray : Color.AliceBlue);
-                            worksheet.Cells[recordIndex, row].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                            worksheet.Cells[recordIndex, row].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                            worksheet.Cells[recordIndex, row].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                            worksheet.Cells[recordIndex, row].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                            row++;
+                            if (propertyInfo.GetType().IsPrimitive)
+                            {
+                                worksheet.Cells[recordIndex, row].Value = propertyInfo.GetValue(data).ToString();
+                                worksheet.Cells[recordIndex, row].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                                worksheet.Cells[recordIndex, row].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                                worksheet.Cells[recordIndex, row].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                worksheet.Cells[recordIndex, row].Style.Fill.BackgroundColor.SetColor(color ? Color.LightGray : Color.AliceBlue);
+                                worksheet.Cells[recordIndex, row].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[recordIndex, row].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[recordIndex, row].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[recordIndex, row].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                row++;
+                            }
                         }
                         recordIndex++;
                         row = 1;
