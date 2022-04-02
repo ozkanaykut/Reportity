@@ -1,13 +1,9 @@
 ﻿using Reportity.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReportitiyTest
 {
-    [ReportityHeader("Lays Satış Raporu", "D:\\logo.png", SummaryField = "Price")]
+    [ReportityHeader("Lays Satış Raporu", "D:\\logo.png", SummaryField = "Quantity")]
     public class Customer
     {
         [ReportityColumnName("Müşteri")]
@@ -15,7 +11,7 @@ namespace ReportitiyTest
         [ReportityColumnName("Ürün Tipi")]
         public string? ProductType { get; set; }
         [ReportityColumnName("Adet")]
-        public int? Quantity { get; set; }
+        public float? Quantity { get; set; }
         [ReportityColumnName("Fiyat")]
         public decimal? Price { get; set; }
         [ReportityColumnName("Sipariş Tarihi")]

@@ -124,7 +124,7 @@ namespace Reportity.Common
                                 if (propertyInfo.Name == summaryfield)
                                 {
                                     if (TypeChecker.isNumeric(propertyInfo.PropertyType))
-                                        SummaryValues.Add((decimal?)propertyInfo.GetValue(data));
+                                        SummaryValues.Add(decimal.Parse(propertyInfo.GetValue(data) == null? "0" : propertyInfo.GetValue(data).ToString()));
                                 }
 
                                 cellText = propertyInfo.GetValue(data)?.ToString();
