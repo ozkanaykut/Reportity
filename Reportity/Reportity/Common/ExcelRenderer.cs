@@ -33,7 +33,7 @@ namespace Reportity.Common
                     List<string> header = new List<string>();
                     foreach (PropertyInfo propertyInfo in type.GetProperties())
                     {
-                        if (TypeChecker.CheckType(propertyInfo))
+                        if (TypeChecker.CheckType(propertyInfo.PropertyType))
                         {
                             header.Add(propertyInfo.Name.ToUpper());
                         }
@@ -65,7 +65,7 @@ namespace Reportity.Common
                         List<string> values = new List<string>();
                         foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
                         {
-                            if (TypeChecker.CheckType(propertyInfo))
+                            if (TypeChecker.CheckType(propertyInfo.PropertyType))
                             {
                                 worksheet.Cells[recordIndex, row].Value = propertyInfo.GetValue(data)?.ToString();
                                 worksheet.Cells[recordIndex, row].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;

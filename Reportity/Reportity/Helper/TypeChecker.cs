@@ -9,39 +9,28 @@ namespace Reportity.Helper
 {
     internal class TypeChecker
     {
-        readonly private static List<string> types = new List<string>() { "System.String", "System.Boolean", "System.Char", "System.Decimal", "System.Double", "System.Single", "System.Int32", "System.UInt32", "System.Int64", "System.UInt64", "System.Int16", "System.UInt16" };
-        public static bool CheckType(PropertyInfo source)
+        private static readonly HashSet<Type> NumericTypes = new HashSet<Type>
+    {
+        typeof(int),  typeof(double),  typeof(decimal),
+        typeof(long), typeof(short),   
+        typeof(ulong),   typeof(ushort),
+        typeof(uint), typeof(float)
+    };
+        private static readonly HashSet<Type> AvailableType = new HashSet<Type>
+    {
+        typeof(int),  typeof(double),  typeof(decimal), typeof(string),
+        typeof(long), typeof(short), typeof(bool), 
+        typeof(ulong),   typeof(ushort),typeof(char),
+        typeof(uint), typeof(float), typeof(DateTime)
+    };
+        public static bool CheckType(Type source)
         {
-            if (source.PropertyType == typeof(string)
-                || source.PropertyType == typeof(int)
-                || source.PropertyType == typeof(char)
-                || source.PropertyType == typeof(decimal)
-                || source.PropertyType == typeof(DateTime)
-                || source.PropertyType == typeof(long)
-                || source.PropertyType == typeof(float)
-                || source.PropertyType == typeof(double)
-                || source.PropertyType == typeof(bool)
-                || source.PropertyType == typeof(short)
-                || source.PropertyType == typeof(int)
-                || source.PropertyType == typeof(uint)
-                || source.PropertyType == typeof(ulong)
-                || source.PropertyType == typeof(ushort)
-                || source.PropertyType == typeof(int?)
-                || source.PropertyType == typeof(char?)
-                || source.PropertyType == typeof(decimal?)
-                || source.PropertyType == typeof(DateTime?)
-                || source.PropertyType == typeof(long?)
-                || source.PropertyType == typeof(float?)
-                || source.PropertyType == typeof(double?)
-                || source.PropertyType == typeof(bool?)
-                || source.PropertyType == typeof(short?)
-                || source.PropertyType == typeof(int?)
-                || source.PropertyType == typeof(uint?)
-                || source.PropertyType == typeof(ulong?)
-                || source.PropertyType == typeof(ushort?))
-                return true;
-            else
-                return false;
+           return AvailableType.Contains(Nullable.GetUnderlyingType(source) ?? source);
+        }
+
+        public static bool isNumeric(Type source)
+        {
+            return NumericTypes.Contains(Nullable.GetUnderlyingType(source) ?? source);
         }
     }
 }

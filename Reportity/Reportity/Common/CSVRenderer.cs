@@ -30,7 +30,7 @@ namespace Reportity.Common
                     List<string> header = new List<string>();
                     foreach (PropertyInfo propertyInfo in type.GetProperties())
                     {
-                        if (TypeChecker.CheckType(propertyInfo))
+                        if (TypeChecker.CheckType(propertyInfo.PropertyType))
                         {
                             header.Add(propertyInfo.Name.ToUpper());
                         }
@@ -40,17 +40,17 @@ namespace Reportity.Common
 
                     foreach (T data in list)
                     {
-                            List<string> values = new List<string>();
-                            foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
+                        List<string> values = new List<string>();
+                        foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
+                        {
+                            if (TypeChecker.CheckType(propertyInfo.PropertyType))
                             {
-                                if (TypeChecker.CheckType(propertyInfo))
-                                {
-                                    values.Add(propertyInfo.GetValue(data)?.ToString());
-                                }
+                                values.Add(propertyInfo.GetValue(data)?.ToString());
                             }
-                            builder.Append(string.Join(",", values) + Environment.NewLine);
+                        }
+                        builder.Append(string.Join(",", values) + Environment.NewLine);
                     }
-                    
+
                     TextWriter tw = new StreamWriter(reportData);
                     tw.Write(builder.ToString());
                     tw.Flush();

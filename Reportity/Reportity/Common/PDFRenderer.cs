@@ -13,7 +13,7 @@ using System.Reflection;
 namespace Reportity.Common
 {
     internal class PDFRenderer<T> : Renderer<T>, IStringExporter<T>, IByteExporter<T>
-    { 
+    {
         const int ceiling = 25;
         public byte[] ExportToStream(IEnumerable<T> list)
         {
@@ -34,9 +34,12 @@ namespace Reportity.Common
                     string reportheader = "";
                     string logopath = "";
                     string? summaryfield = "";
-                    short summaryindex = 0;
                     ArrayList cells = new ArrayList();
                     Type type = typeof(T);
+                    Type SummaryType = null;
+                    string SummaryName = "";
+                    List<decimal?> SummaryValues = new List<decimal?>();
+
                     object[] attrs = type.GetCustomAttributes(true);
                     foreach (object attr in attrs)
                     {
@@ -57,12 +60,19 @@ namespace Reportity.Common
                             ReportityColumnName? columnNameAttr = colattr as ReportityColumnName;
                             if (columnNameAttr != null)
                             {
-                                if (TypeChecker.CheckType(propertyInfo))
+                                if (TypeChecker.CheckType(propertyInfo.PropertyType))
                                 {
-                                    if (columnNameAttr.ColumnName != "")
-                                        cells.Add(columnNameAttr.ColumnName);
-                                    else
-                                        cells.Add(propertyInfo.Name);
+                                    string Name = columnNameAttr.ColumnName == "" ? propertyInfo.Name : columnNameAttr.ColumnName;
+                                    cells.Add(Name);
+                                    
+                                    if (summaryfield == propertyInfo.Name)
+                                    {
+                                        if (TypeChecker.isNumeric(propertyInfo.PropertyType))
+                                        {
+                                            SummaryType = propertyInfo.GetType();
+                                            SummaryName = Name;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -109,8 +119,14 @@ namespace Reportity.Common
                     {
                         foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
                         {
-                            if (TypeChecker.CheckType(propertyInfo))
+                            if (TypeChecker.CheckType(propertyInfo.PropertyType))
                             {
+                                if (propertyInfo.Name == summaryfield)
+                                {
+                                    if (TypeChecker.isNumeric(propertyInfo.PropertyType))
+                                        SummaryValues.Add((decimal?)propertyInfo.GetValue(data));
+                                }
+
                                 cellText = propertyInfo.GetValue(data)?.ToString();
 
                                 iTextSharp.text.Font font = new iTextSharp.text.Font(bf, fontvalue, iTextSharp.text.Font.NORMAL, BaseColor.Black);
@@ -127,6 +143,37 @@ namespace Reportity.Common
                         color = !color;
                     }
 
+                    if (!string.IsNullOrEmpty(summaryfield))
+                    {
+                        decimal? summarytotal = SummaryValues.Sum();
+                        iTextSharp.text.Font fontsummary = new iTextSharp.text.Font(bf, fontvalue, iTextSharp.text.Font.BOLDITALIC, BaseColor.Black);
+
+                        for (int i = 0; i < cells.Count - 2; i++)
+                        {
+                            cell = new PdfPCell(new Phrase(""));
+                            cell.BackgroundColor = new BaseColor(Color.Gray);
+                            table.AddCell(cell);
+                        }
+
+                        cell = new PdfPCell(new Phrase(("Toplam " + SummaryName).Replace("<br />", Environment.NewLine), fontsummary));
+
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.MinimumHeight = 35f;
+                        cell.BackgroundColor = new BaseColor(Color.Gray);
+
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell(new Phrase(summarytotal.ToString()?.Replace("<br />", Environment.NewLine), fontsummary));
+
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.MinimumHeight = 35f;
+                        cell.BackgroundColor = new BaseColor(Color.Gray);
+
+                        table.AddCell(cell);
+                    }
+
                     Document pdfDoc = new Document(PageSize.A4);
                     if (cells.Count > 7)
                         pdfDoc = new Document(PageSize.A4.Rotate());
@@ -134,7 +181,7 @@ namespace Reportity.Common
                     PdfWriter.GetInstance(pdfDoc, ReportData);
                     pdfDoc.Open();
                     table.HeaderRows = 1;
-                   
+
                     iTextSharp.text.Font fheader = new iTextSharp.text.Font(bf, 15, iTextSharp.text.Font.BOLD, BaseColor.Black);
                     iTextSharp.text.Font fdate = new iTextSharp.text.Font(bf, 11, iTextSharp.text.Font.ITALIC, BaseColor.Black);
 
@@ -175,7 +222,6 @@ namespace Reportity.Common
 
                     pdfDoc.Add(new Paragraph(" "));
                     pdfDoc.Add(table);
-
                     pdfDoc.Close();
                 }
                 catch (System.Exception ex)

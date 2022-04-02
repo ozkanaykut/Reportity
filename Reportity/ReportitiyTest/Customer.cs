@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ReportitiyTest
 {
-    [ReportityHeaderAttribute("Lays Satış Raporu", "D:\\logo.png", SummaryField = "Price")]
+    [ReportityHeader("Lays Satış Raporu", "D:\\logo.png", SummaryField = "Price")]
     public class Customer
     {
         [ReportityColumnName("Müşteri")]
@@ -17,7 +17,7 @@ namespace ReportitiyTest
         [ReportityColumnName("Adet")]
         public int? Quantity { get; set; }
         [ReportityColumnName("Fiyat")]
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
         [ReportityColumnName("Sipariş Tarihi")]
         public DateTime OrderDate { get; set; }
         [ReportityColumnName("Bug")]
