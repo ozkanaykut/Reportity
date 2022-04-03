@@ -67,9 +67,39 @@ namespace ReportitiyTest
         public void TestEntitiyToPDFString()
         {
             List<Customer> list = new List<Customer>();
-            list.Add(new Customer() { CustomerName = "Ahmet Necati", OrderDate = new DateTime(2021, 5, 3, 7, 0, 0), Price = 10, ProductType = "Fýrýndan" });
+            list.Add(new Customer() { CustomerName = "Ahmet Necati", OrderDate = new DateTime(2021, 5, 3, 7, 0, 0), Price = 10, ProductType = "Fýrýndan", Quantity = 2 });
             list.Add(new Customer() { CustomerName = "Faruk Biçmez", OrderDate = new DateTime(2021, 5, 3, 4, 12, 0), Price = 5, ProductType = "Klasik", Quantity = 1 });
             list.Add(new Customer() { CustomerName = "Selin Durak", OrderDate = new DateTime(2021, 5, 3, 1, 53, 0), Price = 15, ProductType = "Baharat", Quantity = 3 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
             list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
             string vs = list.ToStringReport(ReportTypes.PdfReport);
         }
@@ -77,9 +107,11 @@ namespace ReportitiyTest
         [TestMethod]
         public void TestEntitiyToPDFStream()
         {
-            List<TestData> list = new List<TestData>();
-            list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 });
-            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
+            List<Customer> list = new List<Customer>();
+            list.Add(new Customer() { CustomerName = "Ahmet Necati", OrderDate = new DateTime(2021, 5, 3, 7, 0, 0), Price = 10, ProductType = "Fýrýndan" });
+            list.Add(new Customer() { CustomerName = "Faruk Biçmez", OrderDate = new DateTime(2021, 5, 3, 4, 12, 0), Price = 5, ProductType = "Klasik", Quantity = 1 });
+            list.Add(new Customer() { CustomerName = "Selin Durak", OrderDate = new DateTime(2021, 5, 3, 1, 53, 0), Price = 15, ProductType = "Baharat", Quantity = 3 });
+            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
             byte[] vs = list.ToStreamReport(ReportTypes.PdfReport);
         }
     }
