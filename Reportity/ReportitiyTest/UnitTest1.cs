@@ -104,7 +104,7 @@ namespace ReportitiyTest
             string vs = list.ToStringReport(ReportTypes.PdfReport);
         }
 
-        [TestMethod]
+        [TestMethod]    
         public void TestEntitiyToPDFStream()
         {
             List<Customer> list = new List<Customer>();

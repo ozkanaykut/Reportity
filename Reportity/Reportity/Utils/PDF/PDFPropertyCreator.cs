@@ -22,6 +22,7 @@ namespace Reportity.Utils.PDF
         public int HorizontalAlignment { get; set; } = 1;
         public float WidthPercentage { get; set; } = 100;
         public Document PDFDocument { get; set; } = new Document(PageSize.A4);
+        public int ImageDpiSettings { get; set; } = 70;
 
         public void Dispose()
         {

@@ -48,7 +48,9 @@ namespace Reportity.Common
 
                             creator.setPDFDocument(ReportObject.Cells.Count);
 
-                            PdfWriter.GetInstance(creator.PDFDocument, ReportData);
+                            PdfWriter writer = PdfWriter.GetInstance(creator.PDFDocument, ReportData);
+                            PageEventHelper pageEventHelper = new PageEventHelper();
+                            writer.PageEvent = pageEventHelper;
                             creator.PDFDocument.Open();
                             creator.ReportTable.HeaderRows = 1;
 

@@ -3,7 +3,7 @@ using System;
 
 namespace ReportitiyTest
 {
-    [ReportityHeader("Lays Satış Raporu", "D:\\logo.png", SummaryField = "Quantity")]
+    [ReportityHeader("Lays Satış Raporu", "D:\\logo.jpg", SummaryField = "Quantity")]
     public class Customer
     {
         [ReportityColumnName("Müşteri")]

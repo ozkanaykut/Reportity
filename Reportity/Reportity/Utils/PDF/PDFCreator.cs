@@ -135,9 +135,9 @@ namespace Reportity.Utils.PDF
                             break;
                     }
 
-                    image?.SetDpi(100, 100);
-                    image?.SetAbsolutePosition(20, PDFDocument.Top - 40);
-                    image?.ScaleToFit(100, 100);
+                    image?.SetDpi(ImageDpiSettings, ImageDpiSettings);
+                    image?.SetAbsolutePosition(PDFDocument.LeftMargin, PDFDocument.Top - PDFDocument.TopMargin);
+                    image?.ScaleToFit(ImageDpiSettings, ImageDpiSettings);
 
                     PDFDocument.Add(image);
                 }
