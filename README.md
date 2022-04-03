@@ -20,7 +20,7 @@
 
 ## A sample pdf report from the entity
 
-![ScreenShot](https://user-images.githubusercontent.com/3394985/161338168-d27d3d1c-e0c6-4bb3-951b-442af5ee5614.png)
+![ExampleExcel](https://user-images.githubusercontent.com/3394985/161426239-a80f1fa6-29c2-4fec-b7c2-b9461b2ec50b.jpg)
 
 ## A sample excel report from the entity
 
@@ -33,3 +33,7 @@
 ## A sample CSV report from the entity
 
 ![csvexample](https://user-images.githubusercontent.com/3394985/161340403-c9ada1e1-5ceb-416c-a26e-10e7749b1186.jpg)
+
+## Test Results
+
+![image](https://user-images.githubusercontent.com/3394985/161426197-9ef930be-f22e-40fc-90da-9264bfdf6e59.png)
