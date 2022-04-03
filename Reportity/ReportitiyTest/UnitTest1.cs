@@ -12,59 +12,52 @@ namespace ReportitiyTest
         [TestMethod]
         public void TestEntitiyToCSVString()
         {
-            List<TestData> list = new List<TestData>();
-            list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 });
-            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
-            string vs = list.ToStringReport(ReportTypes.CsvReport);
+            string vs = testobject().ToStringReport(ReportTypes.CsvReport);
         }
 
         [TestMethod]
         public void TestEntitiyToCSVStream()
         {
-            List<TestData> list = new List<TestData>();
-            list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 });
-            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
-            byte[] vs = list.ToStreamReport(ReportTypes.CsvReport);
+            byte[] vs = testobject().ToStreamReport(ReportTypes.CsvReport);
         }
 
         [TestMethod]
         public void TestEntitiyToExcelString()
         {
-            List<TestData> list = new List<TestData>();
-            list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 });
-            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
-            string vs = list.ToStringReport(ReportTypes.ExcelReport);
+            string vs = testobject().ToStringReport(ReportTypes.ExcelReport);
         }
 
         [TestMethod]
         public void TestEntitiyToExcelStream()
         {
-            List<TestData> list = new List<TestData>();
-            list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 });
-            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
-            byte[] vs = list.ToStreamReport(ReportTypes.ExcelReport);
+            byte[] vs = testobject().ToStreamReport(ReportTypes.ExcelReport);
         }
 
         [TestMethod]
         public void TestEntitiyToXMLString()
         {
-            List<TestData> list = new List<TestData>();
-            list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 });
-            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
-            string vs = list.ToStringReport(ReportTypes.XmlReport);
+            string vs = testobject().ToStringReport(ReportTypes.XmlReport);
         }
 
         [TestMethod]
         public void TestEntitiyToXMLStream()
         {
-            List<TestData> list = new List<TestData>();
-            list.Add(new TestData() { testvalue1 = 1, testvalue2 = 2 });
-            list.Add(new TestData() { testvalue1 = 3, testvalue2 = 4 });
-            byte[] vs = list.ToStreamReport(ReportTypes.XmlReport);
+            byte[] vs = testobject().ToStreamReport(ReportTypes.XmlReport);
         }
 
         [TestMethod]
         public void TestEntitiyToPDFString()
+        {
+            string vs = testobject().ToStringReport(ReportTypes.PdfReport);
+        }
+
+        [TestMethod]    
+        public void TestEntitiyToPDFStream()
+        {
+            byte[] vs = testobject().ToStreamReport(ReportTypes.PdfReport);
+        }
+
+        public List<Customer> testobject()
         {
             List<Customer> list = new List<Customer>();
             list.Add(new Customer() { CustomerName = "Ahmet Necati", OrderDate = new DateTime(2021, 5, 3, 7, 0, 0), Price = 10, ProductType = "Fýrýndan", Quantity = 2 });
@@ -101,18 +94,7 @@ namespace ReportitiyTest
             list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
             list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
             list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
-            string vs = list.ToStringReport(ReportTypes.PdfReport);
-        }
-
-        [TestMethod]    
-        public void TestEntitiyToPDFStream()
-        {
-            List<Customer> list = new List<Customer>();
-            list.Add(new Customer() { CustomerName = "Ahmet Necati", OrderDate = new DateTime(2021, 5, 3, 7, 0, 0), Price = 10, ProductType = "Fýrýndan" });
-            list.Add(new Customer() { CustomerName = "Faruk Biçmez", OrderDate = new DateTime(2021, 5, 3, 4, 12, 0), Price = 5, ProductType = "Klasik", Quantity = 1 });
-            list.Add(new Customer() { CustomerName = "Selin Durak", OrderDate = new DateTime(2021, 5, 3, 1, 53, 0), Price = 15, ProductType = "Baharat", Quantity = 3 });
-            list.Add(new Customer() { CustomerName = "Hatice Arslan", OrderDate = new DateTime(2021, 5, 3, 22, 9, 0), Price = 20, ProductType = "Fýrýndan", Quantity = 4 });
-            byte[] vs = list.ToStreamReport(ReportTypes.PdfReport);
+            return list;
         }
     }
 }
