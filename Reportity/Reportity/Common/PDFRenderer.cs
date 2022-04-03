@@ -6,15 +6,11 @@ using Reportity.Exception;
 using Reportity.Helper;
 using Reportity.Utils;
 using Reportity.Utils.PDF;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Reflection;
 
 namespace Reportity.Common
 {
     internal class PDFRenderer<T> : Renderer<T>, IStringExporter<T>, IByteExporter<T>
     {
-        const int ceiling = 25;
         public byte[] ExportToStream(IEnumerable<T> list)
         {
             return RenderData(list);
