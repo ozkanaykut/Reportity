@@ -20,11 +20,12 @@
 
 ## A sample pdf report from the entity
 
-![ExampleExcel](https://user-images.githubusercontent.com/3394985/161426239-a80f1fa6-29c2-4fec-b7c2-b9461b2ec50b.jpg)
+![ExamplePDF1](https://user-images.githubusercontent.com/3394985/161426329-cf1d7d61-6e6e-42be-ae14-1bd8d50b9207.jpg)
+![ExamplePDF2](https://user-images.githubusercontent.com/3394985/161426337-4c212dfa-9820-43ef-9c80-c3056b8def0c.jpg)
 
 ## A sample excel report from the entity
 
-![ExampleExcel](https://user-images.githubusercontent.com/3394985/161339227-ad7ec3b4-1f51-41b8-957d-bed94cb2b1e1.jpg)
+![ExampleExcel](https://user-images.githubusercontent.com/3394985/161426239-a80f1fa6-29c2-4fec-b7c2-b9461b2ec50b.jpg)
 
 ## A sample XML report from the entity
 
