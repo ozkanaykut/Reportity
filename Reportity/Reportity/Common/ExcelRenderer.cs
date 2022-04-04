@@ -33,14 +33,16 @@ namespace Reportity.Common
                     {
                         ReportObject.setHeaders();
                         ReportObject.setAttributes();
-                        int row = 1;
 
-                        var worksheet = package.Workbook.Worksheets.Add("Reportity");
+                        if (ReportObject.Cells.Count < 1)
+                            throw new ReportitiyException("No column to be processed");
+
+                        int row = 1;
+                        var worksheet = package.Workbook.Worksheets.Add(ReportObject.ReportHeader);
                         worksheet.Row(1).Height = 20;
                         worksheet.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                         worksheet.Row(1).Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                         worksheet.Row(1).Style.Font.Bold = true;
-
 
                         for (int i = 0; i < ReportObject.Cells.Count; i++)
                         {

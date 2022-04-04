@@ -2050,7 +2050,7 @@
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
       },
-      "Reportity/1.0.0": {
+      "Reportity/1.1.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -7325,7 +7325,7 @@
         "system.xml.xpath.xmldocument.nuspec"
       ]
     },
-    "Reportity/1.0.0": {
+    "Reportity/1.1.0": {
       "type": "project",
       "path": "../Reportity/Reportity.csproj",
       "msbuildProject": "../Reportity/Reportity.csproj"
@@ -7336,7 +7336,7 @@
       "MSTest.TestAdapter >= 2.2.7",
       "MSTest.TestFramework >= 2.2.7",
       "Microsoft.NET.Test.Sdk >= 16.11.0",
-      "Reportity >= 1.0.0",
+      "Reportity >= 1.1.0",
       "coverlet.collector >= 3.1.0"
     ]
   },

@@ -35,6 +35,7 @@ namespace Reportity.Utils
                         {
                             string Name = columnNameAttr.ColumnName == "" ? PropertyInfo.Name : columnNameAttr.ColumnName;
                             Cells.Add(Name);
+                            ColumnNameMap.Add(PropertyInfo.Name, columnNameAttr.ColumnName);
 
                             if (SummaryField == PropertyInfo.Name)
                             {

@@ -12,7 +12,7 @@ namespace Reportity.Utils
         public Type? EntityType { get; set; }
         public Type? SummaryType { get; set; }
         public List<decimal?> SummaryValues { get; set; } = new List<decimal?>();
-
+        public Dictionary<string, string> ColumnNameMap { get; set; } = new Dictionary<string, string>();
 
         public ReportityReportObject(Type _entityType)
         {

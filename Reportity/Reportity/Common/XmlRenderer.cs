@@ -2,6 +2,10 @@
 using Reportity.Abstractions;
 using Reportity.Core;
 using Reportity.Exception;
+using Reportity.Helper;
+using Reportity.Utils;
+using System.Dynamic;
+using System.Reflection;
 using System.Xml;
 
 namespace Reportity.Common
@@ -24,12 +28,34 @@ namespace Reportity.Common
             {
                 try
                 {
-                    string value = JsonConvert.SerializeObject(list);
-                    XmlDocument? doc = JsonConvert.DeserializeXmlNode("{\"Row\":" + value + "}", "Reportity");
-                    if (doc!= null)
+                    using (ReportityReportObject ReportObject = new ReportityReportObject(typeof(T)))
                     {
-                        doc.Save(ReportData);
-                        ReportData.Flush();
+                        ReportObject.setHeaders();
+                        ReportObject.setAttributes();
+
+                        if (ReportObject.Cells.Count < 1)
+                            throw new ReportitiyException("No column to be processed");
+                        List<Dictionary<string, object>> NewValues = new List<Dictionary<string, object>>();
+                        foreach (var data in list)
+                        {
+                            Dictionary<string, object> Values = new Dictionary<string, object>();
+                            foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
+                            {
+                                if (TypeChecker.CheckType(propertyInfo.PropertyType))
+                                {
+                                    Values.Add((ReportObject.ColumnNameMap[propertyInfo.Name] == "" ? propertyInfo.Name : ReportObject.ColumnNameMap[propertyInfo.Name]).Replace(" ", ""), propertyInfo.GetValue(data)?.ToString());
+                                }
+                            }
+                            NewValues.Add(Values);
+                        }
+
+                        string JsonValue = JsonConvert.SerializeObject(NewValues);
+                        XmlDocument? doc = JsonConvert.DeserializeXmlNode("{\"Row\":" + JsonValue + "}", ReportObject.ReportHeader?.Replace(" ", ""));
+                        if (doc != null)
+                        {
+                            doc.Save(ReportData);
+                            ReportData.Flush();
+                        }
                     }
                 }
                 catch (System.Exception ex)
@@ -38,7 +64,7 @@ namespace Reportity.Common
                 }
                 return ReportData.ToArray();
             }
-            
+
         }
     }
 }

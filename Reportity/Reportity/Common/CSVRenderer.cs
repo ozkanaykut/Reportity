@@ -2,6 +2,7 @@
 using Reportity.Core;
 using Reportity.Exception;
 using Reportity.Helper;
+using Reportity.Utils;
 using System.Reflection;
 using System.Text;
 
@@ -25,35 +26,34 @@ namespace Reportity.Common
             {
                 try
                 {
-                    Type type = typeof(T);
-                    StringBuilder builder = new StringBuilder();
-                    List<string> header = new List<string>();
-                    foreach (PropertyInfo propertyInfo in type.GetProperties())
+                    using (ReportityReportObject ReportObject = new ReportityReportObject(typeof(T)))
                     {
-                        if (TypeChecker.CheckType(propertyInfo.PropertyType))
-                        {
-                            header.Add(propertyInfo.Name.ToUpper());
-                        }
-                    }
+                        ReportObject.setHeaders();
+                        ReportObject.setAttributes();
 
-                    builder.Append(string.Join(",", header) + Environment.NewLine);
+                        if (ReportObject.Cells.Count < 1)
+                            throw new ReportitiyException("No column to be processed");
 
-                    foreach (T data in list)
-                    {
-                        List<string> values = new List<string>();
-                        foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
+                        StringBuilder builder = new StringBuilder();
+                        builder.Append(string.Join(",", ReportObject.Cells.Cast<string>().ToList()) + Environment.NewLine);
+
+                        foreach (T data in list)
                         {
-                            if (TypeChecker.CheckType(propertyInfo.PropertyType))
+                            List<string> values = new List<string>();
+                            foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
                             {
-                                values.Add(propertyInfo.GetValue(data)?.ToString());
+                                if (TypeChecker.CheckType(propertyInfo.PropertyType))
+                                {
+                                    values.Add(propertyInfo.GetValue(data)?.ToString());
+                                }
                             }
+                            builder.Append(string.Join(",", values) + Environment.NewLine);
                         }
-                        builder.Append(string.Join(",", values) + Environment.NewLine);
-                    }
 
-                    TextWriter tw = new StreamWriter(reportData);
-                    tw.Write(builder.ToString());
-                    tw.Flush();
+                        TextWriter tw = new StreamWriter(reportData);
+                        tw.Write(builder.ToString());
+                        tw.Flush();
+                    }
                 }
                 catch (System.Exception ex)
                 {
