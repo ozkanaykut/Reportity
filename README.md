@@ -16,7 +16,7 @@
 
 ### For example
 
-![Example](https://user-images.githubusercontent.com/3394985/161338884-37bb599a-55b7-48dc-b529-362ed7fb115b.jpg)
+![SampleClass](https://user-images.githubusercontent.com/3394985/161619633-cbde9957-b5ec-42df-82fb-2eafdd3f3ae0.jpg)
 
 ## A sample pdf report from the entity
 
@@ -29,11 +29,11 @@
 
 ## A sample XML report from the entity
 
-![XMLSample](https://user-images.githubusercontent.com/3394985/161340192-7b000a7b-c807-4ca1-85d7-9d7a5c896842.jpg)
+![SampleXML](https://user-images.githubusercontent.com/3394985/161620010-28f7e19c-d5e8-447e-aa58-bcf1e399d2c0.jpg)
 
 ## A sample CSV report from the entity
 
-![csvexample](https://user-images.githubusercontent.com/3394985/161340403-c9ada1e1-5ceb-416c-a26e-10e7749b1186.jpg)
+![SampleCSV](https://user-images.githubusercontent.com/3394985/161620317-81f3ef99-b971-42df-b7f0-3991fcc598c8.jpg)
 
 ## Test Results
 
