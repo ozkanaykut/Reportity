@@ -32,7 +32,7 @@ namespace Reportity.Common
                         ReportObject.setAttributes();
 
                         if (ReportObject.Cells.Count < 1)
-                            throw new ReportitiyException("No column to be processed");
+                            throw new ReportitiyException("No column to be processed, Make sure you add column attribute.");
 
                         StringBuilder builder = new StringBuilder();
                         builder.Append(string.Join(",", ReportObject.Cells.Cast<string>().ToList()) + Environment.NewLine);

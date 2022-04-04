@@ -35,7 +35,7 @@ namespace Reportity.Common
                         ReportObject.setAttributes();
 
                         if (ReportObject.Cells.Count < 1)
-                            throw new ReportitiyException("No column to be processed");
+                            throw new ReportitiyException("No column to be processed, Make sure you add column attribute.");
 
                         int row = 1;
                         var worksheet = package.Workbook.Worksheets.Add(ReportObject.ReportHeader);

@@ -14,7 +14,7 @@ namespace Reportity.Utils.PDF
         public void setColumnSettings(int ColumnSize)
         {
             if (ColumnSize < 1)
-                throw new ReportitiyException("No column to be processed");
+                throw new ReportitiyException("No column to be processed, Make sure you add column attribute.");
             ColumnCount = ColumnSize;
             ColumnsWidth = new int[ColumnSize];
         }
