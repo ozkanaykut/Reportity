@@ -32,11 +32,11 @@ jobs:
             # vary depending on which framework we're building the test project with. So we cache the
             # dependencies there with a key like "deps-netstandard2.0-netcoreapp2.1-xxxx-yyyy" where
             # the "yyyy" part will change if the project file for the test project changes.
-      - run:
-          name: "Path List"
-          command: |
-            dir
-            uname -a
+      #- run:
+      #    name: "Path List"
+      #    command: |
+      #      dir
+      #      uname -a
       - run:
          command: apt-get update && apt-get install -y --no-install-recommends curl git wget && rm -rf /var/lib/apt/lists/*
       - run:
