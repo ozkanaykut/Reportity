@@ -40,7 +40,7 @@ jobs:
       - run:
          command: apt-get update && apt-get install -y --no-install-recommends curl git wget && rm -rf /var/lib/apt/lists/*
       - run:
-          command: curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.201/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \&& dotnet_sha512='a4d96b6ca2abb7d71cc2c64282f9bd07cedc52c03d8d6668346ae0cd33a9a670d7185ab0037c8f0ecd6c212141038ed9ea9b19a188d1df2aae10b2683ce818ce' 
+          command: curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.201/dotnet-sdk-6.0.201-linux-x64.tar.gz \&& dotnet_sha512='a4d96b6ca2abb7d71cc2c64282f9bd07cedc52c03d8d6668346ae0cd33a9a670d7185ab0037c8f0ecd6c212141038ed9ea9b19a188d1df2aae10b2683ce818ce' 
             && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c -
             && mkdir -p /usr/share/dotnet 
             && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt 
