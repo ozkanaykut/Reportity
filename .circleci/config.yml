@@ -2,9 +2,9 @@ version: 2.1
 
 workflows:
   version: 2
-  test:
+  test_and_build:
     jobs:
-	  - build-netstandard-2
+      - build-netstandard-2
 
 orbs:
   win: circleci/windows@2.1
@@ -35,17 +35,17 @@ jobs:
       - run:
           name: "Path List"
           command: dir
-	  - run:
+      - run:
           name: restore Reportity.Reportity
           command: dotnet restore Reportity/Reportity/Reportity.csproj
-	  - save_cache:
+      - save_cache:
           key: deps-<<parameters.build-target-framework>>-{{ checksum "Reportity/Reportity/Reportity.csproj" }}
           paths:
             - /root/.nuget/packages
-	  - run:
+      - run:
           name: build Reportity.Reportity
           command: dotnet build Reportity/Reportity/Reportity.csproj
-	  - persist_to_workspace:
+      - persist_to_workspace:
           root: Reportity/Reportity/Reportity
           paths:
             - bin
