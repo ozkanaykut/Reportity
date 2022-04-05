@@ -1,44 +1,52 @@
 version: 2.1
 
+workflows:
+  version: 2
+  test:
+    jobs:
+	  - build-netstandard-2
+
 orbs:
-  windows: circleci/windows@4.1.1
+  win: circleci/windows@2.1
 
 jobs:
-  test:
-    description: Setup and run application tests
-    executor:
-      name: windows/default
+  build-netstandard-2:
+    parameters:
+      build-target-framework:
+        type: string
+        default: netstandard2.0
+    docker:
+      - image: mcr.microsoft.com/dotnet/core/sdk:6.0-focal
+    environment:
+      ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
     steps:
       - checkout
       - restore_cache:
-          keys:
-            - dotnet-packages-v1-{{ checksum "Reportity/Reportity/Reportity.csproj" }}
+          keys: 
+            - deps-<<parameters.build-target-framework>>-{{ checksum "Reportity/Reportity/Reportity.csproj" }}
+            # For these two-step builds, we're caching the NuGet dependencies twice:
+            # 1. Here, where we're only building CommonSdk itself and not the test project, we cache
+            # the packages with a key like "deps-netstandard2.0-xxxx" where "xxxx" only changes if the
+            # CommonSdk project file changes.
+            # 2. In the test-netcore job, we are loading dependencies for the test project which might
+            # vary depending on which framework we're building the test project with. So we cache the
+            # dependencies there with a key like "deps-netstandard2.0-netcoreapp2.1-xxxx-yyyy" where
+            # the "yyyy" part will change if the project file for the test project changes.
       - run:
           name: "Path List"
           command: dir
-      - run:
-          name: "Install project dependencies"
-          command: dotnet.exe restore Reportity/Reportity/Reportity.csproj
-      - save_cache:
+	  - run:
+          name: restore Reportity.Reportity
+          command: dotnet restore Reportity/Reportity/Reportity.csproj
+	  - save_cache:
+          key: deps-<<parameters.build-target-framework>>-{{ checksum "Reportity/Reportity/Reportity.csproj" }}
           paths:
-            - C:\Users\circleci\.nuget\packages
-          key: dotnet-packages-v1-{{ checksum "Reportity/Reportity/Reportity.csproj" }}
-      - run:
-          name: "Print Working Directory"
-          command: pwd
-  build:
-    description: Build application with Release configuration
-    executor:
-      name: windows/default
-    steps:
-      - checkout
-      - run:
-          name: "Build Application according to some given configuration"
-          command: dotnet.exe build --configuration Release
-workflows:
-  test_and_build:
-    jobs:
-      - test
-      - build:
-          requires:
-            - test
+            - /root/.nuget/packages
+	  - run:
+          name: build Reportity.Reportity
+          command: dotnet build Reportity/Reportity/Reportity.csproj
+	  - persist_to_workspace:
+          root: Reportity/Reportity/Reportity
+          paths:
+            - bin
+            - obj
