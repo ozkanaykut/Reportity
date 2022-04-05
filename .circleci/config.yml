@@ -56,7 +56,7 @@ jobs:
           name: build Reportity.Reportity
           command: dotnet build Reportity/Reportity/Reportity.csproj
       - persist_to_workspace:
-          root: Reportity/Reportity/Reportity
+          root: Reportity/Reportity
           paths:
             - bin
             - obj
