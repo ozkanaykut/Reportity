@@ -10,13 +10,19 @@ jobs:
       name: windows/default
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - dotnet-packages-v1-{{ checksum "Reportity/Reportity/Reportity.csproj" }}
+      - run:
+          name: "Path List"
+          command: dir
       - run:
           name: "Install project dependencies"
-          command: dotnet.exe restore
+          command: dotnet.exe restore Reportity/Reportity/Reportity.csproj
       - save_cache:
           paths:
             - C:\Users\circleci\.nuget\packages
-          key: dotnet-packages-v1-{{ checksum "Reportity/Reportity.csproj" }}
+          key: dotnet-packages-v1-{{ checksum "Reportity/Reportity/Reportity.csproj" }}
       - run:
           name: "Print Working Directory"
           command: pwd
