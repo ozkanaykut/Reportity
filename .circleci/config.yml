@@ -16,7 +16,7 @@ jobs:
         type: string
         default: netstandard2.0
     docker:
-      - image: mcr.microsoft.com/dotnet/aspnet:6.0.3-focal-amd64
+      - image: mcr.microsoft.com/dotnet/aspnet:6.0.201-focal
     environment:
       ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
     steps:
