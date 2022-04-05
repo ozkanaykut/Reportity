@@ -1,4 +1,6 @@
 # Reportity
+![CircleCI](https://circleci.com/gh/ozkanaykut/Reportity.svg?style=svg)
+
 
 ## How can you use this? You need just use attributes on entity
 
