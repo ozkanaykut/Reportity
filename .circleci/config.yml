@@ -1,44 +1,62 @@
 version: 2.1
 
+workflows:
+  version: 2
+  test_and_build:
+    jobs:
+      - build-netstandard-2
+
 orbs:
-  windows: circleci/windows@2.2.0
+  win: circleci/windows@2.1
 
 jobs:
-  test:
-    description: Setup and run application tests
-    executor:
-      name: windows/default
+  build-netstandard-2:
+    parameters:
+      build-target-framework:
+        type: string
+        default: netstandard2.0
+    docker:
+      - image: mcr.microsoft.com/dotnet/aspnet:6.0.3-bullseye-slim-amd64
+    environment:
+      ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
     steps:
       - checkout
       - restore_cache:
-          keys:
-            - dotnet-packages-v1-{{ checksum "Reportity/Reportity/Reportity.csproj" }}
+          keys: 
+            - deps-<<parameters.build-target-framework>>-{{ checksum "Reportity/Reportity/Reportity.csproj" }}
+            # For these two-step builds, we're caching the NuGet dependencies twice:
+            # 1. Here, where we're only building CommonSdk itself and not the test project, we cache
+            # the packages with a key like "deps-netstandard2.0-xxxx" where "xxxx" only changes if the
+            # CommonSdk project file changes.
+            # 2. In the test-netcore job, we are loading dependencies for the test project which might
+            # vary depending on which framework we're building the test project with. So we cache the
+            # dependencies there with a key like "deps-netstandard2.0-netcoreapp2.1-xxxx-yyyy" where
+            # the "yyyy" part will change if the project file for the test project changes.
+      #- run:
+      #    name: "Path List"
+      #    command: |
+      #      dir
+      #      uname -a
       - run:
-          name: "Path List"
-          command: dir
+         command: apt-get update && apt-get install -y --no-install-recommends curl git wget && rm -rf /var/lib/apt/lists/*
       - run:
-          name: "Install project dependencies"
-          command: dotnet.exe restore Reportity/Reportity/Reportity.csproj
+          command: curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.201/dotnet-sdk-6.0.201-linux-x64.tar.gz 
+            && mkdir -p /usr/share/dotnet 
+            && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt 
+            && rm dotnet.tar.gz 
+            && dotnet help
+      - run:
+          name: restore Reportity.Reportity
+          command: dotnet restore Reportity/Reportity/Reportity.csproj
       - save_cache:
+          key: deps-<<parameters.build-target-framework>>-{{ checksum "Reportity/Reportity/Reportity.csproj" }}
           paths:
-            - C:\Users\circleci\.nuget\packages
-          key: dotnet-packages-v1-{{ checksum "Reportity/Reportity/Reportity.csproj" }}
+            - /root/.nuget/packages
       - run:
-          name: "Print Working Directory"
-          command: pwd
-  build:
-    description: Build application with Release configuration
-    executor:
-      name: windows/default
-    steps:
-      - checkout
-      - run:
-          name: "Build Application according to some given configuration"
-          command: dotnet.exe build --configuration Release
-workflows:
-  test_and_build:
-    jobs:
-      - test
-      - build:
-          requires:
-            - test
+          name: build Reportity.Reportity
+          command: dotnet build Reportity/Reportity/Reportity.csproj
+      - persist_to_workspace:
+          root: Reportity/Reportity
+          paths:
+            - bin
+            - obj
